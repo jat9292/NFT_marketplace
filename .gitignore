@@ -1,0 +1,12 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+supported_collections.txt
+weth_address.txt
+market_address.txt
+
+#Hardhat files
+cache
+artifacts

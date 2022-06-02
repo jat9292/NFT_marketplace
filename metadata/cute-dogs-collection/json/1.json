@@ -1,0 +1,27 @@
+{
+    "name" : "Pug",
+    "description": "Pug is a very strong dog",
+    "image" : "https://ipfs.io/ipfs/QmUARziCmGBmrB4fNMHxjtdsLAKTGeW9pLoTNhYEkbLsNZ/1.png",
+    "attributes": [
+        {
+            "trait_type": "Strength",
+            "value": 10,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Speed",
+            "value": 3,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Jump",
+            "value": 2,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Intelligence",
+            "value": 5,
+            "max_value": 10
+        }
+    ]
+}

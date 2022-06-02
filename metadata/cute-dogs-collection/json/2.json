@@ -1,0 +1,27 @@
+{
+    "name" : "Shiba Inu",
+    "description": "Shiba Inu can run very fast",
+    "image" : "https://ipfs.io/ipfs/QmUARziCmGBmrB4fNMHxjtdsLAKTGeW9pLoTNhYEkbLsNZ/2.png",
+    "attributes": [
+        {
+            "trait_type": "Strength",
+            "value": 4,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Speed",
+            "value": 10,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Jump",
+            "value": 8,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Intelligence",
+            "value": 3,
+            "max_value": 10
+        }
+    ]
+}

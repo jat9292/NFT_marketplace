@@ -1,0 +1,27 @@
+{
+    "name" : "St Bernard",
+    "description": "St Bernard invented the first quantum computer",
+    "image" : "https://ipfs.io/ipfs/QmUARziCmGBmrB4fNMHxjtdsLAKTGeW9pLoTNhYEkbLsNZ/3.png",
+    "attributes": [
+        {
+            "trait_type": "Strength",
+            "value": 9,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Speed",
+            "value": 7,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Jump",
+            "value": 4,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Intelligence",
+            "value": 10,
+            "max_value": 10
+        }
+    ]
+}

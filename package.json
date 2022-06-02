@@ -1,0 +1,38 @@
+{
+  "name": "nft_marketplace",
+  "version": "1.0.0",
+  "description": "Special NFT marketplace where bid for an NFT could not only be made in WETH but also with some other NFTs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jat9292/NFT_marketplace.git"
+  },
+  "keywords": [
+    "NFT",
+    "web3"
+  ],
+  "author": "jat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jat9292/NFT_marketplace/issues"
+  },
+  "homepage": "https://github.com/jat9292/NFT_marketplace#readme",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "chai": "^4.3.6",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.8",
+    "hardhat": "^2.9.7"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-etherscan": "^3.0.4",
+    "@openzeppelin/contracts": "^4.6.0",
+    "dotenv": "^16.0.1",
+    "install": "^0.13.0",
+    "npm": "^8.11.0"
+  }
+}
