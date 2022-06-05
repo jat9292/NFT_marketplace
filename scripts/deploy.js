@@ -1,49 +1,66 @@
 const { ethers, run } = require("hardhat");
-const fs = require('fs');
+const fs = require("fs");
+const {verifyContract} = require("../utils/verify")
+
+let WAIT_BLOCK_CONFIRMATION = 5
 
 async function main() {
   // create first collection
-  const SuperMarioWorld = await ethers.getContractFactory("NFTCollection");
-  constructor_args = ["SuperMarioWorld", "SUPM",
+  const SuperMarioWorld = await ethers.getContractFactory("NFTCollection")
+  constructor_args = ["Super Mario World", "SUPM",
   "https://ipfs.io/ipfs/Qmb6tWBDLd9j2oSnvSNhE314WFL7SRpQNtfwjFWsStXp5A/",8]
-  const superMarioWorld = await SuperMarioWorld.deploy(...constructor_args);
+  const superMarioWorld = await SuperMarioWorld.deploy(...constructor_args)
 
-  await superMarioWorld.deployed();
-  console.log("Success! Contract was deployed to: ", superMarioWorld.address);
+  console.log("Success! Contract was deployed to: ", superMarioWorld.address)
+  
+  // verify first collection contract on Etherscan
+  await verifyContract(superMarioWorld,constructor_args,WAIT_BLOCK_CONFIRMATION)
+
   fs.appendFileSync('supported_collections.txt', superMarioWorld.address+'\n')
 
   // mint first two NFTs from first collection
   await superMarioWorld.mint()
   await superMarioWorld.mint()
-  console.log("NFT successfully minted");
-
-  // verify first contract on Etherscan
-  await run('verify:verify', {
-    address: superMarioWorld.address,
-    constructorArguments: constructor_args,
-  })
+  console.log("NFT successfully minted")
 
 
-// create second collection
+  // create second collection
   const CuteDogs = await ethers.getContractFactory("NFTCollection");
   constructor_args = ["Cute dogs", "CDOGS",
   "https://ipfs.io/ipfs/QmfHpdY1iZzazBCibAj7rPNUMBLsNdUHbHP5G1tsnfyHuH/",3]
-  const cuteDogs = await CuteDogs.deploy(...constructor_args);
+  const cuteDogs = await CuteDogs.deploy(...constructor_args)
 
-  await cuteDogs.deployed();
-  console.log("Success! Contract was deployed to: ", cuteDogs.address);
+  console.log("Success! Contract was deployed to: ", cuteDogs.address)
+  
+  // verify second collection contract on Etherscan
+  await verifyContract(cuteDogs,constructor_args,WAIT_BLOCK_CONFIRMATION)
+
   fs.appendFileSync('supported_collections.txt', cuteDogs.address)
 
   // mint first two NFTs from second collection
   await cuteDogs.mint()
   await cuteDogs.mint()
+  console.log("NFT successfully minted")
 
-  // verify second contract on Etherscan
-  await run('verify:verify', {
-    address: cuteDogs.address,
-    constructorArguments: constructor_args,
-  })
-  
+
+  // create WETH contract
+  const WETH = await ethers.getContractFactory("WETH")
+  const weth = await WETH.deploy();
+
+  console.log("Success! Contract was deployed to: ", weth.address)
+  await verifyContract(weth,[],WAIT_BLOCK_CONFIRMATION)
+
+  fs.appendFileSync('weth_address.txt', weth.address)
+
+
+  // create NFT MarketPlace contract
+  const NFT_marketplace = await ethers.getContractFactory("NFTMarketPlace");
+  const nft_marketplace= await NFT_marketplace.deploy(weth.address);
+
+  console.log("Success! Contract was deployed to: ", nft_marketplace.address);
+  await verifyContract(nft_marketplace,[weth.address],WAIT_BLOCK_CONFIRMATION)
+
+  fs.appendFileSync('market_address.txt', nft_marketplace.address)
 }
 
 main()

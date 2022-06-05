@@ -4,7 +4,7 @@
 
 In this project, we create a dapp marketplace for NFTs following the ERC721 standard.
 
-Go to this website to test the Dapp deployed on the Rinkeby testnet : https://transcendent-stroopwafel-4fa627.netlify.app/ 
+Go to this website to test the Dapp deployed on the Rinkeby testnet : [INSERT URL]
 
 ___
 

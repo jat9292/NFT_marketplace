@@ -16,13 +16,14 @@ error NotApprovedForMarketplace();
 error PriceMustBeAboveZero();
 
 contract NFTMarketPlace is ReentrancyGuard {
+
+    address private _weth_address;
     struct Listing {
         uint256 price;
         address seller;
     }
 
     mapping(address => mapping(uint256 => Listing)) private s_listings;
-    mapping(address => uint256) private s_proceeds;
 
     modifier notListed(
         address nftAddress,
@@ -55,6 +56,10 @@ contract NFTMarketPlace is ReentrancyGuard {
             revert NotOwner();
         }
         _;
+    }
+
+    constructor(address weth_address) {
+        _weth_address = weth_address;
     }
 
     /////////////////////
@@ -102,29 +107,27 @@ contract NFTMarketPlace is ReentrancyGuard {
      * @notice Method for buying listing
      * @notice The owner of an NFT could unapprove the marketplace,
      * which would cause this function to fail
-     * Ideally you'd also have a `createOffer` functionality.
      * @param nftAddress Address of NFT contract
      * @param tokenId Token ID of NFT
      */
+
+     // Even if nonReentrant modifier is used, it is good practice to keep the
+     // Checks, Effects, Interations pattern
     function buyItem(address nftAddress, uint256 tokenId)
         external
         payable
         isListed(nftAddress, tokenId)
         nonReentrant
     {
-        // Challenge - How would you refactor this contract to take:
-        // 1. Abitrary tokens as payment? (HINT - Chainlink Price Feeds!)
-        // 2. Be able to set prices in other currencies?
-        // 3. Tweet me @PatrickAlphaC if you come up with a solution!
         Listing memory listedItem = s_listings[nftAddress][tokenId];
         if (msg.value < listedItem.price) {
             revert PriceNotMet(nftAddress, tokenId, listedItem.price);
         }
-        s_proceeds[listedItem.seller] += msg.value;
-        // Could just send the money...
-        // https://fravoll.github.io/solidity-patterns/pull_over_push.html
+        address payable seller_address = payable(listedItem.seller);
         delete (s_listings[nftAddress][tokenId]);
         IERC721(nftAddress).safeTransferFrom(listedItem.seller, msg.sender, tokenId);
+        (bool success, ) = seller_address.call{value: msg.value}("");
+        require(success, "Transfer failed.");
     }
 
     /*
@@ -146,18 +149,6 @@ contract NFTMarketPlace is ReentrancyGuard {
         s_listings[nftAddress][tokenId].price = newPrice;
     }
 
-    /*
-     * @notice Method for withdrawing proceeds from sales
-     */
-    function withdrawProceeds() external {
-        uint256 proceeds = s_proceeds[msg.sender];
-        if (proceeds <= 0) {
-            revert NoProceeds();
-        }
-        s_proceeds[msg.sender] = 0;
-        (bool success, ) = payable(msg.sender).call{value: proceeds}("");
-        require(success, "Transfer failed");
-    }
 
     /////////////////////
     // Getter Functions //
@@ -171,7 +162,4 @@ contract NFTMarketPlace is ReentrancyGuard {
         return s_listings[nftAddress][tokenId];
     }
 
-    function getProceeds(address seller) external view returns (uint256) {
-        return s_proceeds[seller];
-    }
 }
