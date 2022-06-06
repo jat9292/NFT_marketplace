@@ -1,6 +1,6 @@
 # NFT market place project
 
-## Launching the dapp
+## Launching the Dapp 
 
 In this project, we create a dapp marketplace for NFTs following the ERC721 standard.
 
