@@ -9,4 +9,6 @@ market_address.txt
 
 #Hardhat files
 cache
-artifacts
+
+# Local Netlify folder
+.netlify
