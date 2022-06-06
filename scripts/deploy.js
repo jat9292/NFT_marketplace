@@ -15,7 +15,7 @@ async function main() {
   
   // verify first collection contract on Etherscan
   await verifyContract(superMarioWorld,constructor_args,WAIT_BLOCK_CONFIRMATION)
-
+  try{fs.unlinkSync('supported_collections.txt')}catch(error){}
   fs.appendFileSync('supported_collections.txt', superMarioWorld.address+'\n')
 
   // mint first two NFTs from first collection
@@ -49,7 +49,7 @@ async function main() {
 
   console.log("Success! Contract was deployed to: ", weth.address)
   await verifyContract(weth,[],WAIT_BLOCK_CONFIRMATION)
-
+  try{fs.unlinkSync('weth_address.txt')}catch(error){}
   fs.appendFileSync('weth_address.txt', weth.address)
 
 
@@ -59,7 +59,7 @@ async function main() {
 
   console.log("Success! Contract was deployed to: ", nft_marketplace.address);
   await verifyContract(nft_marketplace,[weth.address],WAIT_BLOCK_CONFIRMATION)
-
+  try{fs.unlinkSync('market_address.txt')}catch(error){}
   fs.appendFileSync('market_address.txt', nft_marketplace.address)
 }
 

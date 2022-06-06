@@ -4,7 +4,7 @@
 
 In this project, we create a dapp marketplace for NFTs following the ERC721 standard.
 
-Go to this website to test the Dapp deployed on the Rinkeby testnet : [INSERT URL]
+Go to this website to test the Dapp deployed on the Rinkeby testnet : http://51.15.19.178:3000/ 
 
 ___
 
