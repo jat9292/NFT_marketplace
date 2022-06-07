@@ -23,10 +23,11 @@ function MyApp({ Component, pageProps }) {
     };
   });
 
-  function checkIfWalletIsConnected(we){
-    
+  async function checkIfWalletIsConnected(we){
+
     if (we!==undefined){
-      if (we.chainId===RINKEBY_CHAIN_ID)
+      const chainId = await we.request({ method: 'eth_chainId' })
+      if (chainId===RINKEBY_CHAIN_ID)
         setConnected('connected_to_correct_network')
       else {setConnected('connected_to_wrong_network')}
     }
