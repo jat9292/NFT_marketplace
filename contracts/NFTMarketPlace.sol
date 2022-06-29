@@ -4,8 +4,6 @@ pragma solidity 0.8.14;
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-
-
 error PriceNotMet(address nftAddress, uint256 tokenId, uint256 price);
 error ItemNotForSale(address nftAddress, uint256 tokenId);
 error NotListed(address nftAddress, uint256 tokenId);
@@ -16,7 +14,6 @@ error NotApprovedForMarketplace();
 error PriceMustBeAboveZero();
 
 contract NFTMarketPlace is ReentrancyGuard {
-
     address private _weth_address;
     struct Listing {
         uint256 price;
@@ -111,8 +108,8 @@ contract NFTMarketPlace is ReentrancyGuard {
      * @param tokenId Token ID of NFT
      */
 
-     // Even if nonReentrant modifier is used, it is good practice to keep the
-     // Checks, Effects, Interations pattern
+    // Even if nonReentrant modifier is used, it is good practice to keep the
+    // Checks, Effects, Interations pattern
     function buyItem(address nftAddress, uint256 tokenId)
         external
         payable
@@ -125,7 +122,11 @@ contract NFTMarketPlace is ReentrancyGuard {
         }
         address payable seller_address = payable(listedItem.seller);
         delete (s_listings[nftAddress][tokenId]);
-        IERC721(nftAddress).safeTransferFrom(listedItem.seller, msg.sender, tokenId);
+        IERC721(nftAddress).safeTransferFrom(
+            listedItem.seller,
+            msg.sender,
+            tokenId
+        );
         (bool success, ) = seller_address.call{value: msg.value}("");
         require(success, "Transfer failed.");
     }
@@ -149,7 +150,6 @@ contract NFTMarketPlace is ReentrancyGuard {
         s_listings[nftAddress][tokenId].price = newPrice;
     }
 
-
     /////////////////////
     // Getter Functions //
     /////////////////////
@@ -161,5 +161,4 @@ contract NFTMarketPlace is ReentrancyGuard {
     {
         return s_listings[nftAddress][tokenId];
     }
-
 }
