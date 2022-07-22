@@ -1,7 +1,7 @@
 {
   "name": "nft_marketplace",
   "version": "1.0.0",
-  "description": "Special NFT marketplace where bid for an NFT could not only be made in WETH but also with some other NFTs",
+  "description": "A very simple NFT marketplace",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
